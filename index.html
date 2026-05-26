@@ -1,9 +1,4 @@
-<?php
-$conn = @new mysqli("localhost", "puligal_user", "Maveerar2026", "puligal_db");
-$news_result = $conn->query("SELECT * FROM news WHERE category='news' ORDER BY id DESC");
-$songs_result = $conn->query("SELECT * FROM news WHERE category='song' ORDER BY id DESC");
-$maveerar_result = $conn->query("SELECT * FROM news WHERE category='maveerar' ORDER BY id DESC");
-?>
+
 <!DOCTYPE html>
 <html lang="ta">
 <head>
@@ -45,8 +40,6 @@ $maveerar_result = $conn->query("SELECT * FROM news WHERE category='maveerar' OR
         <!-- 📰 செய்திகள் மற்றும் காணொளிகள் -->
         <section class="news-section">
             <h2>அண்மைக்காலச் செய்திகள்</h2>
-            <?php if ($news_result && $news_result->num_rows > 0): ?>
-                <?php while($row = $news_result->fetch_assoc()): ?>
                     <article class="news-card">
                         <h3><a href="view.php?id=<?php echo $row['id']; ?>" style="color: #ffcc00; text-decoration: none;"><?php echo htmlspecialchars($row['title']); ?></a></h3>
                         <p><?php echo nl2br(htmlspecialchars(mb_strimwidth($row['content'], 0, 180, "..."))); ?></p>
@@ -103,7 +96,6 @@ $maveerar_result = $conn->query("SELECT * FROM news WHERE category='maveerar' OR
                 <?php endwhile; ?>
             <?php else: ?>
                 <p class="no-data">மாவீரர் விபரங்கள் இல்லை.</p>
-            <?php endif; ?>
         </aside>
 
     </main>
