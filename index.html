@@ -8,16 +8,39 @@
 </head>
 <body>
 
-    <!-- 📌 Header / Navigation Bar -->
+      <!-- 📌 நவீன மொபைல் வடிவமைப்புடன் கூடிய Header / Navigation Bar -->
     <header class="navbar">
-        <div class="logo"> ஒளிக்கீற்று | OLIKEETRU</div>
-        <nav>
-            <a href="index.php" class="active">முகப்பு</a>
+  <!-- 🛡️ லோகோவோடு கூடிய புதிய மொழிபெயர்க்க முடியாத பாதுகாப்புக் குறியீடு -->
+<div class="logo notranslate" translate="no" style="display: flex; align-items: center; gap: 10px;">
+    <img src="logo_icon.png" style="height: 35px; width: auto; object-fit: contain;" alt="Olikeetru Icon">
+    <span>ஒளிக்கீற்று | OLIKEETRU</span>
+</div>
+        
+        <!-- மொபைல் போன்களில் மட்டும் காட்டும் 3 கோடுகள் கொண்ட பொத்தான் -->
+        <button class="menu-toggle" id="mobile-menu-btn" aria-label="Toggle Menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <!-- பிரதான மெனுக்கள் -->
+        <nav class="nav-links" id="nav-menu">
+            <a href="index.html" class="active">முகப்பு</a>
             <a href="#media-section">ஒளிப்பதிவுகள்</a>
             <a href="#history-section">மாவீரர் வரலாறு</a>
-            <a href="admin.php" target="_blank">நிர்வாகம்</a>
         </nav>
     </header>
+
+    <!-- மொபைலில் மெனுவை ஆன்/ஆஃப் செய்யும் எளிய ஜாவாஸ்கிரிப்ட் குறியீடு (கோப்பின் இறுதியில் </body> க்கு மேல் இருந்தால் நலம், அல்லது இங்கேயே இருக்கலாம்) -->
+    <script>
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const navMenu = document.getElementById('nav-menu');
+
+        menuBtn.addEventListener('click', () => {
+            menuBtn.classList.toggle('open');
+            navMenu.classList.toggle('show');
+        });
+    </script>
 
     <!-- 🚩 பிரதான பேனர் பகுதி -->
     <section class="banner-section">
@@ -26,73 +49,159 @@
                 <h1>ஒளிக்கீற்று தேசிய ஊடக மையம்</h1>
                 <p>உண்மைச் செய்திகளின் ஒளிக்கீற்றாய், மாவீரர்களின் வரலாறு, ஆவணப் படங்கள், முக்கிய செய்திகள் மற்றும் வரலாற்றுத் தரவுகளைத் தாங்கி நிற்கும் உத்தியோகபூர்வ இணையத்தளம்.</p>
             </div>
-            <!-- 🚩 இங்கு தமிழீழக் கொடிக்குப் பதிலாக ஒளிக்கீற்று லோகோ படம் இணைக்கப்பட்டுள்ளது -->
             <div class="banner-flag">
-<img src="logo.jpeg" alt="ஒளிக்கீற்று லோகோ" class="static-flag">
+                <img src="logo.jpeg" alt="ஒளிக்கீற்று லோகோ" class="static-flag">
             </div>
         </div>
     </section>
 
     <!-- 📌 பிரதான உள்ளடக்கப் பகுதி -->
     <main class="main-container">
-    <img src="[Tamil_Eelam_Flag.svg]" class="post-media" alt="செய்திப் படம்">
-</article>
-
-        <!-- 📰 செய்திகள் மற்றும் காணொளிகள் -->
+        
+        <!-- 📰 செய்திகள் பகுதி -->
         <section class="news-section">
-            <h2>அண்மைக்காலச் செய்திகள்</h2>
-                    <article class="news-card">
-                        <h3><a href="view.php?id=<?php echo $row['id']; ?>" style="color: #ffcc00; text-decoration: none;"><?php echo htmlspecialchars($row['title']); ?></a></h3>
-                        <p><?php echo nl2br(htmlspecialchars(mb_strimwidth($row['content'], 0, 180, "..."))); ?></p>
-                        
-                        <?php if($row['media_type'] == 'image' && !empty($row['media_path'])): ?>
-                            <img src="<?php echo htmlspecialchars($row['media_path']); ?>" class="post-media">
-                        <?php elseif($row['media_type'] == 'video' && !empty($row['media_path'])): ?>
-                            <video controls class="post-media" style="width:100%; max-height:350px;"><source src="<?php echo htmlspecialchars($row['media_path']); ?>"></video>
-                        <?php endif; ?>
-                        <br><br>
-                        <a href="view.php?id=<?php echo $row['id']; ?>" style="color: #ff6600; text-decoration: none; font-size: 0.9rem;">மேலும் வாசிக்க &rarr;</a>
-                    </article>
-                <?php endwhile; ?>
-            <?php else: ?>
-                <p class="no-data">செய்திகள் எதுவும் இல்லை.</p>
-            <?php endif; ?>
+            <h2>அண்மைக்காலச் செய்திகள் (Latest News)</h2>
+                        <!-- 🔹 புதிய செய்தி: லண்டன் முள்ளிவாய்க்கால் நினைவேந்தல் போராட்டம் -->
+            <article class="news-card" style="border-left: 5px solid #ff3333;">
+                <span style="background: #ff3333; color: #fff; padding: 3px 8px; font-size: 0.8rem; font-weight: bold; border-radius: 3px;">புதிய செய்தி</span>
+                <h3 style="margin-top: 10px;">
+                    <a href="news_mullivaikkal_london.html" style="color:#ffcc00; text-decoration:none;">பிரித்தானியத் தலைநகர் லண்டனில் பல்லாயிரக்கணக்கான மக்கள் திரண்ட முள்ளிவாய்க்கால் பேரணி - 2026 &rarr;</a>
+                </h3>
+                <p>முள்ளிவாய்க்கால் தமிழினப் பேரவலத்தின் 17ஆம் ஆண்டு நினைவேந்தலை ஒட்டி, பிரித்தானியத் தலைநகர் லண்டனில் புலம்பெயர் தமிழ் மக்கள் பல்லாயிரக்கணக்காக ஒன்றுகூடி நீதிக்காகப் பிரம்மாண்ட போராட்டப் பேரணியை நடத்தியுள்ளனர்...</p>
+                <br>
+                <a href="news_mullivaikkal_london.html" style="color: #ff6600; text-decoration: none; font-weight: bold; font-size: 0.9rem;">முழுச் செய்தியையும் புகைப்படங்களையும் பார்க்க &rarr;</a>
+            </article>
 
-            <!-- 🎬 ஒளிப்பதிவுகள் பகுதி -->
-            <h2 id="media-section" style="margin-top:50px;">ஆவணப் படங்கள் & ஒளிப்பதிவுகள்</h2>
-            <?php if ($songs_result && $songs_result->num_rows > 0): ?>
-                <?php while($row = $songs_result->fetch_assoc()): ?>
-                    <div class="news-card" style="border-left: 5px solid #ffcc00;">
-                        <h3>📹 <?php echo htmlspecialchars($row['title']); ?></h3>
-                        <p><?php echo htmlspecialchars($row['content']); ?></p>
-                        <?php if($row['media_type'] == 'video' && !empty($row['media_path'])): ?>
-                            <video controls style="width: 100%; margin-top: 10px;"><source src="<?php echo htmlspecialchars($row['media_path']); ?>"></video>
-                        <?php endif; ?>
-                    </div>
-                <?php endwhile; ?>
-            <?php else: ?>
-                <p class="no-data">ஒளிப்பதிவுகள் எதுவும் இல்லை.</p>
-            <?php endif; ?>
+
+            <!-- 🎬 மாற்றி அமைக்கப்பட்ட புதிய காணொளிப் பகுதி -->
+<article class="news-card" style="border-left: 5px solid #ffcc00;">
+    <h3>📹 தமிழீழ வரலாற்று ஆவணப்படம்</h3>
+    <p>கீழே உள்ள ஆவணப் படத்தைக் காணொளி வாயிலாகக் காணலாம்:</p>
+    <!-- 🎬 தடை செய்ய முடியாத உத்தியோகபூர்வ நேரலைப் பகுதி -->
+<article class="news-card" style="border-left: 5px solid #ffcc00;">
+    <h3>📹 ஒளிக்கீற்று நேரலை ஒளிபரப்பு (Live Stream)</h3>
+    <p>தேசிய நினைவேந்தல் நிகழ்வுகள் மற்றும் உத்தியோகபூர்வ செய்திகளின் நேரடி ஒளிபரப்பு:</p>
+    
+    <!-- Video.js பிளேயருக்கான சிஎஸ்எஸ் -->
+    <link href="https://zencdn.net" rel="stylesheet" />
+
+    <!-- பிரதான வீடியோ பிளேயர் -->
+    <video id="olikeetru-live" class="video-js vjs-default-skin vjs-big-play-centered" controls preload="auto" width="100%" height="360" data-setup='{}'>
+        <!-- உங்களது லினக்ஸ் சர்வரில் இருந்து வரும் நேரடி லைவ் லிங்க் இங்கு இணையும் -->
+        <source src="http://localhost/live/stream.m3u8" type="application/x-mpegURL">
+        <p class="vjs-no-js">இந்தக் காணொளியைக் காண உங்கள் பிரவுசரில் ஜாவாஸ்கிரிப்ட் ஆன் செய்யப்பட வேண்டும்.</p>
+    </video>
+
+    <!-- Video.js பிளேயருக்கான ஜாவாஸ்கிரிப்ட் கோப்புகள் -->
+    <script src="https://zencdn.net"></script>
+</article>
         </section>
 
-        <!-- 📇 மாவீரர் வரலாறு பகுதி -->
-        <aside class="sidebar-section" id="history-section">
-            <h2 style="font-size: 1.4rem; margin-bottom: 20px; border-bottom: 2px solid #333; padding-bottom: 10px;">📇 மாவீரர் வரலாறு</h2>
-                    <div style="background: #1a1a1a; padding: 15px; margin-bottom: 20px; border-radius: 6px; border: 1px solid #252525; text-align: left;">
-                        <?php if(!empty($row['media_path'])): ?>
-                            <img src="<?php echo htmlspecialchars($row['media_path']); ?>" style="width:100%; height:180px; object-fit:cover; border-radius:4px; margin-bottom:10px;">
-                        <?php endif; ?>
-                        <h4 style="color:#ffcc00; font-size:1.2rem; margin-bottom:8px;"><?php echo htmlspecialchars($row['title']); ?></h4>
-                        
-                        <p style="font-size:0.85rem; color:#aaa; margin:3px 0;"><strong>🔹 பிறப்பு:</strong> <?php echo htmlspecialchars($row['birth_date']); ?></p>
-                        <p style="font-size:0.85rem; color:#aaa; margin:3px 0;"><strong>🔹 வீரச்சாவு:</strong> <?php echo htmlspecialchars($row['death_date']); ?></p>
-                        <p style="font-size:0.85rem; color:#aaa; margin:3px 0;"><strong>🔹 இடம்:</strong> <?php echo htmlspecialchars($row['death_place']); ?></p>
-                        
-                        <p style="font-size:0.9rem; color:#ddd; margin-top:10px;"><?php echo mb_strimwidth(htmlspecialchars($row['content']), 0, 100, "..."); ?></p>
-                        <a href="view.php?id=<?php echo $row['id']; ?>" style="color:#ff6600; text-decoration:none; font-size:0.8rem; display:block; margin-top:8px;">முழு விபரம் வாசிக்க &rarr;</a>
-                    </div>
-                <p class="no-data">மாவீரர் விபரங்கள் இல்லை.</p>
+                 <!-- 📇 மாவீரர் வரலாறு பகுதி (Sidebar) -->
+        <aside class="sidebar-section" id="history-section" style="max-height: 800px; overflow-y: auto; padding-right: 10px;">
+            <h2 style="font-size: 1.4rem; margin-bottom: 20px; border-bottom: 2px solid #333; padding-bottom: 10px;">📇 முக்கிய மாவீரர்கள் ஆவணகம் (20 மாவீரர்கள்)</h2>
+            
+            <div style="background: #1a1a1a; padding: 12px; margin-bottom: 12px; border-radius: 6px; border: 1px solid #252525; text-align: left;">
+                <h4 style="font-size:1.1rem; margin-bottom:5px;"><a href="maveerar_shankar.html" style="color:#ffcc00; text-decoration:none;">1. லெப். சங்கர் (முதல் மாவீரர்) &rarr;</a></h4>
+                <p style="font-size:0.8rem; color:#aaa; margin:2px 0;"><strong>🔹 வீரச்சாவு:</strong> 27.11.1982 | யாழ்ப்பாணம்</p>
+            </div>
+
+            <div style="background: #1a1a1a; padding: 12px; margin-bottom: 12px; border-radius: 6px; border: 1px solid #252525; text-align: left;">
+                <h4 style="font-size:1.1rem; margin-bottom:5px;"><a href="maveerar_miller.html" style="color:#ffcc00; text-decoration:none;">2. கரும்புலி கப்டன் மில்லர் &rarr;</a></h4>
+                <p style="font-size:0.8rem; color:#aaa; margin:2px 0;"><strong>🔹 வீரச்சாவு:</strong> 05.07.1987 | நெல்லியடி</p>
+            </div>
+
+            <div style="background: #1a1a1a; padding: 12px; margin-bottom: 12px; border-radius: 6px; border: 1px solid #252525; text-align: left;">
+                <h4 style="font-size:1.1rem; margin-bottom:5px;"><a href="maveerar_angayarkanni.html" style="color:#ffcc00; text-decoration:none;">3. கரும்புலி மேஜர் அங்கயற்கண்ணி &rarr;</a></h4>
+                <p style="font-size:0.8rem; color:#aaa; margin:2px 0;"><strong>🔹 வீரச்சாவு:</strong> 16.08.1994 | காங்கேசன்துறை</p>
+            </div>
+
+            <div style="background: #1a1a1a; padding: 12px; margin-bottom: 12px; border-radius: 6px; border: 1px solid #252525; text-align: left;">
+                <h4 style="font-size:1.1rem; margin-bottom:5px;"><a href="maveerar_malathi.html" style="color:#ffcc00; text-decoration:none;">4. 2ஆம் லெப். மாலதி &rarr;</a></h4>
+                <p style="font-size:0.8rem; color:#aaa; margin:2px 0;"><strong>🔹 வீரச்சாவு:</strong> 10.10.1987 | கோப்பாய்</p>
+            </div>
+
+            <div style="background: #1a1a1a; padding: 12px; margin-bottom: 12px; border-radius: 6px; border: 1px solid #252525; text-align: left;">
+                <h4 style="font-size:1.1rem; margin-bottom:5px;"><a href="maveerar_balraj.html" style="color:#ffcc00; text-decoration:none;">5. பிரிகேடியர் பால்ராஜ் &rarr;</a></h4>
+                <p style="font-size:0.8rem; color:#aaa; margin:2px 0;"><strong>🔹 வீரச்சாவு:</strong> 20.05.2008 | வன்னி</p>
+            </div>
+
+            <div style="background: #1a1a1a; padding: 12px; margin-bottom: 12px; border-radius: 6px; border: 1px solid #252525; text-align: left;">
+                <h4 style="font-size:1.1rem; margin-bottom:5px;"><a href="maveerar_tamilchelvan.html" style="color:#ffcc00; text-decoration:none;">6. பிரிகேடியர் தமிழ்ச்செல்வன் &rarr;</a></h4>
+                <p style="font-size:0.8rem; color:#aaa; margin:2px 0;"><strong>🔹 வீரச்சாவு:</strong> 02.11.2007 | கிளிநொச்சி</p>
+            </div>
+
+            <div style="background: #1a1a1a; padding: 12px; margin-bottom: 12px; border-radius: 6px; border: 1px solid #252525; text-align: left;">
+                <h4 style="font-size:1.1rem; margin-bottom:5px;"><a href="maveerar_kittu.html" style="color:#ffcc00; text-decoration:none;">7. கேணல் கிட்டு &rarr;</a></h4>
+                <p style="font-size:0.8rem; color:#aaa; margin:2px 0;"><strong>🔹 வீரச்சாவு:</strong> 16.01.1993 | கடல் மீது</p>
+            </div>
+
+            <div style="background: #1a1a1a; padding: 12px; margin-bottom: 12px; border-radius: 6px; border: 1px solid #252525; text-align: left;">
+                <h4 style="font-size:1.1rem; margin-bottom:5px;"><a href="maveerar_charles.html" style="color:#ffcc00; text-decoration:none;">8. லெப். கேணல் சார்லஸ் அன்ரனி &rarr;</a></h4>
+                <p style="font-size:0.8rem; color:#aaa; margin:2px 0;"><strong>🔹 வீரச்சாவு:</strong> 15.07.1883 | மீசாலை</p>
+            </div>
+
+            <div style="background: #1a1a1a; padding: 12px; margin-bottom: 12px; border-radius: 6px; border: 1px solid #252525; text-align: left;">
+                <h4 style="font-size:1.1rem; margin-bottom:5px;"><a href="maveerar_theepan.html" style="color:#ffcc00; text-decoration:none;">9. பிரிகேடியர் தீபன் &rarr;</a></h4>
+                <p style="font-size:0.8rem; color:#aaa; margin:2px 0;"><strong>🔹 வீரச்சாவு:</strong> 05.04.2009 | ஆனந்தபுரம்</p>
+            </div>
+
+            <div style="background: #1a1a1a; padding: 12px; margin-bottom: 12px; border-radius: 6px; border: 1px solid #252525; text-align: left;">
+                <h4 style="font-size:1.1rem; margin-bottom:5px;"><a href="maveerar_bhanu.html" style="color:#ffcc00; text-decoration:none;">10. பிரிகேடியர் பானு &rarr;</a></h4>
+                <p style="font-size:0.8rem; color:#aaa; margin:2px 0;"><strong>🔹 வீரச்சாவு:</strong> 18.05.2009 | முள்ளிவாய்க்கால்</p>
+            </div>
+
+            <div style="background: #1a1a1a; padding: 12px; margin-bottom: 12px; border-radius: 6px; border: 1px solid #252525; text-align: left;">
+                <h4 style="font-size:1.1rem; margin-bottom:5px;"><a href="maveerar_vidusha.html" style="color:#ffcc00; text-decoration:none;">11. பிரிகேடியர் விதுஷா &rarr;</a></h4>
+                <p style="font-size:0.8rem; color:#aaa; margin:2px 0;"><strong>🔹 வீரச்சாவு:</strong> 05.04.2009 | ஆனந்தபுரம்</p>
+            </div>
+
+            <div style="background: #1a1a1a; padding: 12px; margin-bottom: 12px; border-radius: 6px; border: 1px solid #252525; text-align: left;">
+                <h4 style="font-size:1.1rem; margin-bottom:5px;"><a href="maveerar_durga.html" style="color:#ffcc00; text-decoration:none;">12. பிரிகேடியர் துர்க்கா &rarr;</a></h4>
+                <p style="font-size:0.8rem; color:#aaa; margin:2px 0;"><strong>🔹 வீரச்சாவு:</strong> 05.04.2009 | ஆனந்தபுரம்</p>
+            </div>
+
+            <div style="background: #1a1a1a; padding: 12px; margin-bottom: 12px; border-radius: 6px; border: 1px solid #252525; text-align: left;">
+                <h4 style="font-size:1.1rem; margin-bottom:5px;"><a href="maveerar_victor.html" style="color:#ffcc00; text-decoration:none;">13. லெப். கேணல் விக்டர் &rarr;</a></h4>
+                <p style="font-size:0.8rem; color:#aaa; margin:2px 0;"><strong>🔹 வீரச்சாவு:</strong> 12.10.1986 | மன்னார்</p>
+            </div>
+
+            <div style="background: #1a1a1a; padding: 12px; margin-bottom: 12px; border-radius: 6px; border: 1px solid #252525; text-align: left;">
+                <h4 style="font-size:1.1rem; margin-bottom:5px;"><a href="maveerar_imran.html" style="color:#ffcc00; text-decoration:none;">14. லெப். கேணல் இம்ரான் &rarr;</a></h4>
+                <p style="font-size:0.8rem; color:#aaa; margin:2px 0;"><strong>🔹 வீரச்சாவு:</strong> 16.01.1993 | கடல் மீது</p>
+            </div>
+
+            <div style="background: #1a1a1a; padding: 12px; margin-bottom: 12px; border-radius: 6px; border: 1px solid #252525; text-align: left;">
+                <h4 style="font-size:1.1rem; margin-bottom:5px;"><a href="maveerar_pandithar.html" style="color:#ffcc00; text-decoration:none;">15. லெப். கேணல் பண்டிதர் &rarr;</a></h4>
+                <p style="font-size:0.8rem; color:#aaa; margin:2px 0;"><strong>🔹 வீரச்சாவு:</strong> 09.01.1985 | அச்சுவேலி</p>
+            </div>
+
+            <div style="background: #1a1a1a; padding: 12px; margin-bottom: 12px; border-radius: 6px; border: 1px solid #252525; text-align: left;">
+                <h4 style="font-size:1.1rem; margin-bottom:5px;"><a href="maveerar_curles.html" style="color:#ffcc00; text-decoration:none;">16. கேணல் சாள்ஸ் &rarr;</a></h4>
+                <p style="font-size:0.8rem; color:#aaa; margin:2px 0;"><strong>🔹 வீரச்சாவு:</strong> 05.01.2008 | மன்னார்</p>
+            </div>
+
+            <div style="background: #1a1a1a; padding: 12px; margin-bottom: 12px; border-radius: 6px; border: 1px solid #252525; text-align: left;">
+                <h4 style="font-size:1.1rem; margin-bottom:5px;"><a href="maveerar_paramanu.html" style="color:#ffcc00; text-decoration:none;">17. லெப். கேணல் பரமனு &rarr;</a></h4>
+                <p style="font-size:0.8rem; color:#aaa; margin:2px 0;"><strong>🔹 வீரச்சாவு:</strong> 01.02.1997 | ஜெயசிக்குறூ సమర్</p>
+            </div>
+
+            <div style="background: #1a1a1a; padding: 12px; margin-bottom: 12px; border-radius: 6px; border: 1px solid #252525; text-align: left;">
+                <h4 style="font-size:1.1rem; margin-bottom:5px;"><a href="maveerar_gaddafi.html" style="color:#ffcc00; text-decoration:none;">18. கேணல் கடாபி &rarr;</a></h4>
+                <p style="font-size:0.8rem; color:#aaa; margin:2px 0;"><strong>🔹 வீரச்சாவு:</strong> 18.05.2009 | முள்ளிவாய்க்கால்</p>
+            </div>
+
+            <div style="background: #1a1a1a; padding: 12px; margin-bottom: 12px; border-radius: 6px; border: 1px solid #252525; text-align: left;">
+                <h4 style="font-size:1.1rem; margin-bottom:5px;"><a href="maveerar_vaan_shankar.html" style="color:#ffcc00; text-decoration:none;">19. கேணல் சங்கர் (வான்படை) &rarr;</a></h4>
+                <p style="font-size:0.8rem; color:#aaa; margin:2px 0;"><strong>🔹 வீரச்சாவு:</strong> 26.09.2001 | வன்னி</p>
+            </div>
+
+            <div style="background: #1a1a1a; padding: 12px; margin-bottom: 12px; border-radius: 6px; border: 1px solid #252525; text-align: left;">
+                <h4 style="font-size:1.1rem; margin-bottom:5px;"><a href="maveerar_nathan.html" style="color:#ffcc00; text-decoration:none;">20. லெப். கேணல் நாதன் &rarr;</a></h4>
+                <p style="font-size:0.8rem; color:#aaa; margin:2px 0;"><strong>🔹 வீரச்சாவு:</strong> 26.10.1996 | பிரான்ஸ்</p>
+            </div>
         </aside>
+
 
     </main>
 
@@ -102,4 +211,3 @@
 
 </body>
 </html>
-

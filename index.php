@@ -1,0 +1,116 @@
+<?php
+$conn = @new mysqli("localhost", "puligal_user", "Maveerar2026", "puligal_db");
+$news_result = $conn->query("SELECT * FROM news WHERE category='news' ORDER BY id DESC");
+$songs_result = $conn->query("SELECT * FROM news WHERE category='song' ORDER BY id DESC");
+$maveerar_result = $conn->query("SELECT * FROM news WHERE category='maveerar' ORDER BY id DESC");
+?>
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ஒளிக்கீற்று - Olikeetru | தமிழீழ தேசிய ஒளிபரப்பு</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- 📌 Header / Navigation Bar -->
+    <header class="navbar">
+        <div class="logo">💡 ஒளிக்கீற்று | OLIKEETRU</div>
+        <nav>
+            <a href="index.php" class="active">முகப்பு</a>
+            <a href="#media-section">ஒளிப்பதிவுகள்</a>
+            <a href="#history-section">மாவீரர் வரலாறு</a>
+            <a href="admin.php" target="_blank">நிர்வாகம்</a>
+        </nav>
+    </header>
+
+    <!-- 🚩 பிரதான பேனர் பகுதி -->
+    <section class="banner-section">
+        <div class="banner-container">
+            <div class="banner-text">
+                <h1>ஒளிக்கீற்று தேசிய ஊடக மையம்</h1>
+                <p>உண்மைச் செய்திகளின் ஒளிக்கீற்றாய், மாவீரர்களின் வரலாறு, ஆவணப் படங்கள், முக்கிய செய்திகள் மற்றும் வரலாற்றுத் தரவுகளைத் தாங்கி நிற்கும் உத்தியோகபூர்வ இணையத்தளம்.</p>
+            </div>
+            <!-- 🚩 இங்கு தமிழீழக் கொடிக்குப் பதிலாக ஒளிக்கீற்று லோகோ படம் இணைக்கப்பட்டுள்ளது -->
+            <div class="banner-flag">
+<img src="logo.jpeg" alt="ஒளிக்கீற்று லோகோ" class="static-flag">
+            </div>
+        </div>
+    </section>
+
+    <!-- 📌 பிரதான உள்ளடக்கப் பகுதி -->
+    <main class="main-container">
+        
+        <!-- 📰 செய்திகள் மற்றும் காணொளிகள் -->
+        <section class="news-section">
+            <h2>அண்மைக்காலச் செய்திகள்</h2>
+            <?php if ($news_result && $news_result->num_rows > 0): ?>
+                <?php while($row = $news_result->fetch_assoc()): ?>
+                    <article class="news-card">
+                        <h3><a href="view.php?id=<?php echo $row['id']; ?>" style="color: #ffcc00; text-decoration: none;"><?php echo htmlspecialchars($row['title']); ?></a></h3>
+                        <p><?php echo nl2br(htmlspecialchars(mb_strimwidth($row['content'], 0, 180, "..."))); ?></p>
+                        
+                        <?php if($row['media_type'] == 'image' && !empty($row['media_path'])): ?>
+                            <img src="<?php echo htmlspecialchars($row['media_path']); ?>" class="post-media">
+                        <?php elseif($row['media_type'] == 'video' && !empty($row['media_path'])): ?>
+                            <video controls class="post-media" style="width:100%; max-height:350px;"><source src="<?php echo htmlspecialchars($row['media_path']); ?>"></video>
+                        <?php endif; ?>
+                        <br><br>
+                        <a href="view.php?id=<?php echo $row['id']; ?>" style="color: #ff6600; text-decoration: none; font-size: 0.9rem;">மேலும் வாசிக்க &rarr;</a>
+                    </article>
+                <?php endwhile; ?>
+            <?php else: ?>
+                <p class="no-data">செய்திகள் எதுவும் இல்லை.</p>
+            <?php endif; ?>
+
+            <!-- 🎬 ஒளிப்பதிவுகள் பகுதி -->
+            <h2 id="media-section" style="margin-top:50px;">ஆவணப் படங்கள் & ஒளிப்பதிவுகள்</h2>
+            <?php if ($songs_result && $songs_result->num_rows > 0): ?>
+                <?php while($row = $songs_result->fetch_assoc()): ?>
+                    <div class="news-card" style="border-left: 5px solid #ffcc00;">
+                        <h3>📹 <?php echo htmlspecialchars($row['title']); ?></h3>
+                        <p><?php echo htmlspecialchars($row['content']); ?></p>
+                        <?php if($row['media_type'] == 'video' && !empty($row['media_path'])): ?>
+                            <video controls style="width: 100%; margin-top: 10px;"><source src="<?php echo htmlspecialchars($row['media_path']); ?>"></video>
+                        <?php endif; ?>
+                    </div>
+                <?php endwhile; ?>
+            <?php else: ?>
+                <p class="no-data">ஒளிப்பதிவுகள் எதுவும் இல்லை.</p>
+            <?php endif; ?>
+        </section>
+
+        <!-- 📇 மாவீரர் வரலாறு பகுதி -->
+        <aside class="sidebar-section" id="history-section">
+            <h2 style="font-size: 1.4rem; margin-bottom: 20px; border-bottom: 2px solid #333; padding-bottom: 10px;">📇 மாவீரர் வரலாறு</h2>
+            
+            <?php if ($maveerar_result && $maveerar_result->num_rows > 0): ?>
+                <?php while($row = $maveerar_result->fetch_assoc()): ?>
+                    <div style="background: #1a1a1a; padding: 15px; margin-bottom: 20px; border-radius: 6px; border: 1px solid #252525; text-align: left;">
+                        <?php if(!empty($row['media_path'])): ?>
+                            <img src="<?php echo htmlspecialchars($row['media_path']); ?>" style="width:100%; height:180px; object-fit:cover; border-radius:4px; margin-bottom:10px;">
+                        <?php endif; ?>
+                        <h4 style="color:#ffcc00; font-size:1.2rem; margin-bottom:8px;"><?php echo htmlspecialchars($row['title']); ?></h4>
+                        
+                        <p style="font-size:0.85rem; color:#aaa; margin:3px 0;"><strong>🔹 பிறப்பு:</strong> <?php echo htmlspecialchars($row['birth_date']); ?></p>
+                        <p style="font-size:0.85rem; color:#aaa; margin:3px 0;"><strong>🔹 வீரச்சாவு:</strong> <?php echo htmlspecialchars($row['death_date']); ?></p>
+                        <p style="font-size:0.85rem; color:#aaa; margin:3px 0;"><strong>🔹 இடம்:</strong> <?php echo htmlspecialchars($row['death_place']); ?></p>
+                        
+                        <p style="font-size:0.9rem; color:#ddd; margin-top:10px;"><?php echo mb_strimwidth(htmlspecialchars($row['content']), 0, 100, "..."); ?></p>
+                        <a href="view.php?id=<?php echo $row['id']; ?>" style="color:#ff6600; text-decoration:none; font-size:0.8rem; display:block; margin-top:8px;">முழு விபரம் வாசிக்க &rarr;</a>
+                    </div>
+                <?php endwhile; ?>
+            <?php else: ?>
+                <p class="no-data">மாவீரர் விபரங்கள் இல்லை.</p>
+            <?php endif; ?>
+        </aside>
+
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; 2026 ஒளிக்கீற்று (Olikeetru) - அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை.</p>
+    </footer>
+
+</body>
+</html>
